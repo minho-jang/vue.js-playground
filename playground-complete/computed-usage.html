@@ -13,6 +13,9 @@
 </head>
 <body>
   <div id="app">
+    <!-- 아래와 같이 isError에 따라 class를 바인딩 시킬 수 있지만 -->
+    <p v-bind:class="{ warning : isError }">Hello</p>
+    <!-- 깔끔하게 computed 속성으로 빼는 것이 좋다. -->
     <p v-bind:class="errorTextColor">Hello</p>
   </div>
   
@@ -25,6 +28,7 @@
         isError: false
       },
       computed: {
+        // class 
         errorTextColor: function() {
           // if (isError) {
           //   return 'warning'

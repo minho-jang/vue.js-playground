@@ -18,11 +18,14 @@
       data: {
         num: 10
       },
+      // computed는 간단한 연산. validation과 같은
+      // 왠만하면 computed를 사용하는 것을 권유
       computed: {
         doubleNum: function() {
           return this.num * 2;
         }
       },
+      // watch는 무거운 연산. axios 요청과 같은
       watch: {
         num: function(newValue, oldValue) {
           this.fetchUserByNumber(newValue);
