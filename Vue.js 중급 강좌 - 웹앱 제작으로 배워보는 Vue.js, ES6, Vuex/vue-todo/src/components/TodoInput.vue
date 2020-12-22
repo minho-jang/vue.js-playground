@@ -7,11 +7,13 @@
     </span>
 
     <Modal v-if="showModal" @close="showModal=false">
-      <!--
-        you can use custom content here to overwrite
-        default content
-      -->
-      <h3 slot="header">custom header</h3>
+      <h3 slot="header">
+        경고!
+        <i class="fas fa-times closeModalBtn" @click="showModal=false"></i>
+      </h3>
+      <div slot="body">
+        아무것도 입력되지 않았습니다.
+      </div>
     </Modal> 
   </div>
 </template>
@@ -20,27 +22,28 @@
 import Modal from './common/Modal.vue'
 
 export default {
-  data: function() {
+  data() {
     return {
       newTodoItem: "",
       showModal: false
     }
   },
   methods: {
-    addTodo: function() {
+    addTodo() {
       if (this.newTodoItem !== '') {
-        this.$emit('addTodoItem', this.newTodoItem);
+        const trimmedItem = this.newTodoItem.trim();
+        this.$store.commit('addOneItem', trimmedItem);
         this.clearInput();
       } else {
-        console.log("ELSE");
+        this.showModal = !this.showModal;
       }
     },
-    clearInput: function() {
+    clearInput() {
       this.newTodoItem = '';
     }
   },
   components: {
-    Modal: Modal
+    Modal
   }
 }
 </script>
@@ -69,5 +72,8 @@ input:focus {
 .addBtn {
   color: white;
   vertical-align: middle;
+}
+.closeModalBtn {
+  color: #42b983;
 }
 </style>
