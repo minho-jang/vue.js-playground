@@ -66,6 +66,30 @@ ES6를 지원하지 않는 브라우저를 위해 transpiling을 해준다.
 ### Vuex
 컴포넌트 관리를 위한 상태 관리 패턴이자 라이브러리
 
+### state, getter
+state는 data 속성, getter는 computed 속성과 비슷하다.
+연산된 데이터(state)에 접근하는 것이 getter.
+
 ### mutations, actions
 mutations에는 동기 로직, actions에는 비동기 로직
+데이터(state)를 변경하는 것이 mutations.
 
+### Helper
+아래와 같이 state와 getters는 보통 `computed()`에서 주로 사용하고, mutations와 actions는 `methods`에서 사용한다.
+```
+export default {
+  computed() {
+    ...matState(['A']),
+    ...mapGetters(['B'])
+  },
+  methods {
+    ...mapMutations(['C']),
+    ...mapActions(['D'])
+  }
+}
+```
+
+### Vuex를 쓰면서 달라지는 것
+- 기존에 `this.$emit()`으로 이벤트 발생시키고, `props`로 데이터를 전달하는 방식이 아니라 store에 데이터를 두고 mutations로 조작하는 방식으로 바뀐다.
+- state(데이터)에 접근하기 위해 getters를 쓰고 `this.$store.commit('mutation name')`을 통해 실행시켜 데이터를 조작한다.
+- Helper를 쓰게 되면 commit 대신 mapMutations를 import하여 바로 `this.mutation()`과 같이 사용할 수 있다.

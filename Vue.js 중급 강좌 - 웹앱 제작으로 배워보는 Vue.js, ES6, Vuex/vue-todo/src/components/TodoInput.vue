@@ -1,6 +1,8 @@
 <template>
   <div class="inputBox shadow">
-    <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo">
+    <input type="text" v-model="newTodoItem" v-on:keypress.enter="addTodo">
+    <!-- <BaseInput v-model="newTodoItem" v-on:keyup.enter="addTodo"></BaseInput> -->
+
     <!-- <button v-on:click="addTodo">add</button> -->
     <span class="addContainer" v-on:click="addTodo">
       <i class="fas fa-plus addBtn"></i>
@@ -19,7 +21,9 @@
 </template>
 
 <script>
-import Modal from './common/Modal.vue'
+import { mapMutations } from 'vuex';
+import Modal from './common/Modal';
+// import BaseInput from './common/BaseInput'
 
 export default {
   data() {
@@ -29,10 +33,11 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['addOneItem']),
     addTodo() {
       if (this.newTodoItem !== '') {
         const trimmedItem = this.newTodoItem.trim();
-        this.$store.commit('addOneItem', trimmedItem);
+        this.addOneItem(trimmedItem);
         this.clearInput();
       } else {
         this.showModal = !this.showModal;
@@ -43,7 +48,8 @@ export default {
     }
   },
   components: {
-    Modal
+    Modal,
+    // BaseInput
   }
 }
 </script>
